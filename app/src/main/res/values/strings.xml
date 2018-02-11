@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Mail Template</string>
+    <string name="category_mail">Mail</string>
+    <string name="category_contact">Contact</string>
+    <string name="category_list">List</string>
+    <string name="new_mail">Add New Mail</string>
+    <string name="new_compose">Compose</string>
+    <string name="to_name">To:</string>
+    <string name="add_contact">Add New Contact</string>
+    <string name="first_name">First Name:</string>
+    <string name="last_name">Last Name:</string>
+    <string name="email_id">Email Id:</string>
+</resources>
