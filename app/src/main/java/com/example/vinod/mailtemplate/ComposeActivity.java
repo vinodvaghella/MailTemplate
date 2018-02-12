@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
-import javax.mail.Message.RecipientType;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -29,15 +29,12 @@ import javax.mail.internet.MimeMessage;
  */
 
 public class ComposeActivity extends AppCompatActivity implements View.OnClickListener{
-    FloatingActionButton fabSd;
 
-
-   // Button send;
 
     Session session = null;
     ProgressDialog progressDialog = null;
     Context context = null;
-    EditText email, subject, message;
+    EditText email, subject, msgText;
     String eml, sub, msg;
 
 
@@ -51,9 +48,8 @@ public class ComposeActivity extends AppCompatActivity implements View.OnClickLi
 
         email = (EditText)findViewById(R.id.email);
         subject = (EditText)findViewById(R.id.subject);
-        message = (EditText)findViewById(R.id.message);
-//
-//
+        msgText = (EditText)findViewById(R.id.message);
+
         login.setOnClickListener(this);
 
 }
@@ -63,7 +59,7 @@ public class ComposeActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         eml = email.getText().toString();
         sub = subject.getText().toString();
-        msg = message.getText().toString();
+        msg = msgText.getText().toString();
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -75,7 +71,7 @@ public class ComposeActivity extends AppCompatActivity implements View.OnClickLi
         session = Session.getDefaultInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("testfrom345@gmail.com","p1234p1234");
+                return new PasswordAuthentication("mailtemplate30@gmail.com","123456789k");
             }
         });
 
@@ -88,18 +84,25 @@ public class ComposeActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected String doInBackground(String... params) {
             try {
-                Log.d("inBackground", "Do in background");
-                MimeMessage message = new MimeMessage(session);
-                Log.d("inBackground", "Do in background");
-                message.setFrom(new InternetAddress("testfrom345@gmail.com"));
-                message.setRecipients(RecipientType.TO, InternetAddress.parse(eml));
+                Log.d("inBackground", "1 Do in background");
+                Message message = new MimeMessage(session);
+                Log.d("inBackground", "2 Do in background");
+                message.setFrom(new InternetAddress("mailtemplate30@gmail.com"));
+                Log.d("inBackground", "3 Do in background");
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(eml));
+                Log.d("inBackground", "4 Do in background");
                 message.setSubject(sub);
-                message.setContent(message,"text/html; charset=utf-8");
-
+                Log.d("inBackground", "5 Do in background");
+                message.setContent(msg,"text/html; charset=utf-8");
+                Log.d("inBackground", "6 Do in background");
                 Transport.send(message);
             }catch (MessagingException e){
                 e.printStackTrace();
             }catch (Exception e){
+                Log.d("inBackground", "7 Do in background");
+                String errMsg = e.getMessage();
+                Log.d("inBackground", errMsg);
+                Log.d("inBackground", "8 Do in background");
                 e.printStackTrace();
             }
             return null;
@@ -108,9 +111,13 @@ public class ComposeActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected void onPostExecute(String result) {
             progressDialog.dismiss();
+            Log.d("inBackground", "9 Do in background");
             email.setText("");
-            message.setText("");
+            Log.d("inBackground", "10 Do in background");
+            msgText.setText("");
+            Log.d("inBackground", "11 Do in background");
             subject.setText("");
+            Log.d("inBackground", "12 Do in background");
             Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_LONG).show();
         }
     }
