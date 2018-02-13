@@ -84,25 +84,20 @@ public class ComposeActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected String doInBackground(String... params) {
             try {
-                Log.d("inBackground", "1 Do in background");
+
                 Message message = new MimeMessage(session);
-                Log.d("inBackground", "2 Do in background");
+
                 message.setFrom(new InternetAddress("mailtemplate30@gmail.com"));
-                Log.d("inBackground", "3 Do in background");
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(eml));
-                Log.d("inBackground", "4 Do in background");
                 message.setSubject(sub);
-                Log.d("inBackground", "5 Do in background");
                 message.setContent(msg,"text/html; charset=utf-8");
-                Log.d("inBackground", "6 Do in background");
                 Transport.send(message);
             }catch (MessagingException e){
                 e.printStackTrace();
             }catch (Exception e){
-                Log.d("inBackground", "7 Do in background");
-                String errMsg = e.getMessage();
+                              String errMsg = e.getMessage();
                 Log.d("inBackground", errMsg);
-                Log.d("inBackground", "8 Do in background");
+
                 e.printStackTrace();
             }
             return null;
@@ -111,13 +106,11 @@ public class ComposeActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected void onPostExecute(String result) {
             progressDialog.dismiss();
-            Log.d("inBackground", "9 Do in background");
+
             email.setText("");
-            Log.d("inBackground", "10 Do in background");
             msgText.setText("");
-            Log.d("inBackground", "11 Do in background");
             subject.setText("");
-            Log.d("inBackground", "12 Do in background");
+
             Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_LONG).show();
         }
     }
